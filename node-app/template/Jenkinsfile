@@ -30,7 +30,14 @@ pipeline {
                 script {
                     echo "Installing Node.js dependencies for ${APP_NAME}"
                     sh """
-                        npm ci
+                        # Check if package-lock.json exists, use npm ci if it does, otherwise use npm install
+                        if [ -f package-lock.json ]; then
+                            echo "package-lock.json found, using npm ci"
+                            npm ci
+                        else
+                            echo "package-lock.json not found, using npm install"
+                            npm install
+                        fi
                     """
                 }
             }

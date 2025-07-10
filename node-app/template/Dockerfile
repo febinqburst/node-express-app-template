@@ -20,10 +20,10 @@ COPY app.js .
 # Set environment variables
 ENV NODE_ENV=production
 ENV USER=BackstageUser
-ENV PORT=3000
+ENV PORT=8085
 
 # Expose the application port
-EXPOSE 3000
+EXPOSE 8085
 
 # Create a non-root user for security
 RUN addgroup -g 1001 -S nodejs && \
@@ -35,7 +35,7 @@ USER nextjs
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:3000/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"
+  CMD node -e "require('http').get('http://localhost:8085/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"
 
 # Run the application
 CMD ["npm", "start"] 

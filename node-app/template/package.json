@@ -1,7 +1,7 @@
 {
   "name": "${{ values.app_name | lower }}",
   "version": "1.0.0",
-  "description": "${{ values.app_name | title }} - Node.js Express API with Docker deployment and Jenkins CI/CD",
+  "description": "${{ values.app_name | title }} - Node.js Express API with Docker deployment and Jenkins CI/CD (Port 8085)",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",

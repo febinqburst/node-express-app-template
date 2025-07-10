@@ -52,7 +52,7 @@ Returns system statistics including:
 ### Environment Variables
 
 - `USER`: The name to display in greetings (default: "World")
-- `PORT`: The port to run the application on (default: 3000)
+- `PORT`: The port to run the application on (default: 8085)
 - `NODE_ENV`: The Node.js environment (default: "development")
 
 ## Deployment

@@ -35,22 +35,22 @@ npm start
 npm run dev
 ```
 
-The application will start on `http://localhost:3000`
+The application will start on `http://localhost:8085`
 
 ## Testing the API
 
 ```bash
 # Get application details
-curl http://localhost:3000/api/details
+curl http://localhost:8085/api/details
 
 # Health check
-curl http://localhost:3000/health
+curl http://localhost:8085/health
 
 # Application info
-curl http://localhost:3000/
+curl http://localhost:8085/
 
 # System statistics
-curl http://localhost:3000/api/stats
+curl http://localhost:8085/api/stats
 ```
 
 ## Running with Docker
@@ -63,19 +63,19 @@ docker build -t ${{ values.app_name }} .
 ### Run the container
 ```bash
 # Run with default user and port binding
-docker run -p 3000:3000 ${{ values.app_name }}
+docker run -p 8085:8085 ${{ values.app_name }}
 
 # Run with custom user
-docker run -p 3000:3000 -e USER="CustomUser" ${{ values.app_name }}
+docker run -p 8085:8085 -e USER="CustomUser" ${{ values.app_name }}
 
 # Run with custom port
-docker run -p 8080:3000 -e USER="CustomUser" ${{ values.app_name }}
+docker run -p 8080:8085 -e USER="CustomUser" ${{ values.app_name }}
 ```
 
 ## Environment Variables
 
 - `USER`: The name to display in the greeting (defaults to "${{ values.user_name }}")
-- `PORT`: The port to run the application on (defaults to 3000)
+- `PORT`: The port to run the application on (defaults to 8085)
 - `NODE_ENV`: The Node.js environment (defaults to production in Docker)
 
 ## Example API Responses
@@ -138,7 +138,7 @@ The pipeline automatically triggers on code pushes to the main branch.
 - Dependencies: Express.js 4.18.2
 - Non-root user for security
 - Health check endpoint
-- Exposes port 3000
+- Exposes port 8085
 
 ## Development
 

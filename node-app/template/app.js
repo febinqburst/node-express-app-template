@@ -63,7 +63,7 @@ app.get('/api/stats', (req, res) => {
 });
 
 // Start server
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8085;
 app.listen(port, '0.0.0.0', () => {
     console.log(`${{ values.app_name | title }} Application listening on port ${port}`);
     console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);

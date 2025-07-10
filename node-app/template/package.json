@@ -1,0 +1,30 @@
+{
+  "name": "${{ values.app_name | lower }}",
+  "version": "1.0.0",
+  "description": "${{ values.app_name | title }} - Node.js Express API with Docker deployment and Jenkins CI/CD",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "api",
+    "docker",
+    "jenkins",
+    "backstage"
+  ],
+  "author": "${{ values.user_name }}",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+} 

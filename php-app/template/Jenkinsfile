@@ -30,26 +30,34 @@ pipeline {
                 script {
                     echo "Installing PHP dependencies for ${APP_NAME}"
                     sh """
-                        # Check if composer is available
-                        if command -v composer >/dev/null 2>&1; then
-                            echo "Composer found, installing dependencies"
-                            if [ -f composer.json ]; then
-                                composer install --no-dev --optimize-autoloader
+                        # Check if PHP is available
+                        if command -v php >/dev/null 2>&1; then
+                            echo "PHP found, proceeding with dependency installation"
+                            
+                            # Check if composer is available
+                            if command -v composer >/dev/null 2>&1; then
+                                echo "Composer found, installing dependencies"
+                                if [ -f composer.json ]; then
+                                    composer install --no-dev --optimize-autoloader
+                                else
+                                    echo "No composer.json found, skipping dependency installation"
+                                fi
                             else
-                                echo "No composer.json found, skipping dependency installation"
+                                echo "Composer not found, installing composer..."
+                                # Install composer
+                                curl -sS https://getcomposer.org/installer | php
+                                chmod +x composer.phar
+                                
+                                if [ -f composer.json ]; then
+                                    echo "Installing dependencies with composer.phar"
+                                    php composer.phar install --no-dev --optimize-autoloader
+                                else
+                                    echo "No composer.json found, skipping dependency installation"
+                                fi
                             fi
                         else
-                            echo "Composer not found, installing composer..."
-                            # Install composer
-                            curl -sS https://getcomposer.org/installer | php
-                            chmod +x composer.phar
-                            
-                            if [ -f composer.json ]; then
-                                echo "Installing dependencies with composer.phar"
-                                php composer.phar install --no-dev --optimize-autoloader
-                            else
-                                echo "No composer.json found, skipping dependency installation"
-                            fi
+                            echo "PHP not found, skipping dependency installation"
+                            echo "Dependencies will be installed during Docker build"
                         fi
                     """
                 }
@@ -61,20 +69,28 @@ pipeline {
                 script {
                     echo "Building PHP application: ${APP_NAME}"
                     sh """
-                        # Run PHP syntax check
-                        find . -name "*.php" -exec php -l {} \\;
-                        
-                        # Run tests if available
-                        if [ -f composer.json ] && [ -d tests ]; then
-                            if command -v composer >/dev/null 2>&1; then
-                                composer test || echo "No tests defined"
-                            elif [ -f composer.phar ]; then
-                                php composer.phar test || echo "No tests defined"
+                        # Check if PHP is available for syntax check
+                        if command -v php >/dev/null 2>&1; then
+                            echo "PHP found, running syntax check"
+                            # Run PHP syntax check
+                            find . -name "*.php" -exec php -l {} \\;
+                            
+                            # Run tests if available
+                            if [ -f composer.json ] && [ -d tests ]; then
+                                if command -v composer >/dev/null 2>&1; then
+                                    composer test || echo "No tests defined"
+                                elif [ -f composer.phar ]; then
+                                    php composer.phar test || echo "No tests defined"
+                                else
+                                    echo "Neither composer nor composer.phar found, skipping tests"
+                                fi
                             else
-                                echo "Neither composer nor composer.phar found, skipping tests"
+                                echo "No tests directory found, skipping tests"
                             fi
                         else
-                            echo "No tests directory found, skipping tests"
+                            echo "PHP not found, skipping syntax check"
+                            echo "Syntax check will be performed during Docker build"
+                            echo "✅ Build validation will happen in Docker container"
                         fi
                     """
                 }

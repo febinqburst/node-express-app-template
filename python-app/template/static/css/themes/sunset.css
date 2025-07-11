@@ -1,0 +1,212 @@
+/* Sunset Theme */
+.theme-sunset {
+    background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+    background-attachment: fixed;
+    color: #8B4513;
+}
+
+.theme-sunset .navbar {
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid rgba(255, 126, 95, 0.2);
+}
+
+.theme-sunset .nav-logo h2 {
+    color: #ff7e5f;
+}
+
+.theme-sunset .nav-link {
+    color: #8B4513;
+}
+
+.theme-sunset .nav-link:hover {
+    color: #ff7e5f;
+}
+
+.theme-sunset .dropdown-content {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 126, 95, 0.2);
+}
+
+.theme-sunset .dropdown-content a {
+    color: #8B4513;
+}
+
+.theme-sunset .dropdown-content a:hover {
+    background: rgba(255, 126, 95, 0.1);
+    color: #ff7e5f;
+}
+
+.theme-sunset .bar {
+    background: #8B4513;
+}
+
+.theme-sunset .main-content {
+    background: rgba(255, 251, 248, 0.95);
+    border-radius: 20px 20px 0 0;
+    margin-top: 80px;
+    backdrop-filter: blur(20px);
+}
+
+.theme-sunset .btn-primary {
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    color: white;
+    border: none;
+}
+
+.theme-sunset .btn-primary:hover {
+    background: linear-gradient(135deg, #feb47b, #ff7e5f);
+}
+
+.theme-sunset .btn-secondary {
+    background: transparent;
+    color: #ff7e5f;
+    border: 2px solid #ff7e5f;
+}
+
+.theme-sunset .btn-secondary:hover {
+    background: #ff7e5f;
+    color: white;
+}
+
+.theme-sunset .feature-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 126, 95, 0.2);
+}
+
+.theme-sunset .feature-card:hover {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: #ff7e5f;
+}
+
+.theme-sunset .feature-icon {
+    color: #ff7e5f;
+}
+
+.theme-sunset .stat-number {
+    color: #ff7e5f;
+}
+
+.theme-sunset .filter-btn {
+    color: #ff7e5f;
+    border-color: #ff7e5f;
+}
+
+.theme-sunset .filter-btn.active,
+.theme-sunset .filter-btn:hover {
+    background: #ff7e5f;
+    color: white;
+}
+
+.theme-sunset .gallery-item {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.theme-sunset .portfolio-item {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.theme-sunset .tech-tag {
+    background: rgba(255, 126, 95, 0.1);
+    color: #ff7e5f;
+}
+
+.theme-sunset .skill-category {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 126, 95, 0.2);
+}
+
+.theme-sunset .skill-item {
+    background: rgba(255, 126, 95, 0.1);
+    color: #ff7e5f;
+}
+
+.theme-sunset .tech-item {
+    background: rgba(255, 126, 95, 0.1);
+    color: #ff7e5f;
+}
+
+.theme-sunset .tech-item:hover {
+    background: rgba(255, 126, 95, 0.2);
+}
+
+.theme-sunset .stat {
+    background: rgba(255, 126, 95, 0.1);
+    color: #ff7e5f;
+}
+
+.theme-sunset .timeline-items::before {
+    background: #ff7e5f;
+}
+
+.theme-sunset .timeline-icon {
+    background: #ff7e5f;
+    color: white;
+}
+
+.theme-sunset .timeline-content {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 126, 95, 0.2);
+}
+
+.theme-sunset .contact-item {
+    background: rgba(255, 126, 95, 0.1);
+}
+
+.theme-sunset .contact-icon {
+    background: #ff7e5f;
+    color: white;
+}
+
+.theme-sunset .social-icon {
+    background: #ff7e5f;
+    color: white;
+}
+
+.theme-sunset .social-icon:hover {
+    background: #feb47b;
+}
+
+.theme-sunset .contact-form {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.theme-sunset .form-group input,
+.theme-sunset .form-group textarea {
+    border-color: rgba(255, 126, 95, 0.3);
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.theme-sunset .form-group input:focus,
+.theme-sunset .form-group textarea:focus {
+    border-color: #ff7e5f;
+    box-shadow: 0 0 0 3px rgba(255, 126, 95, 0.1);
+}
+
+.theme-sunset .faq-item {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 126, 95, 0.2);
+}
+
+.theme-sunset .faq-question {
+    color: #ff7e5f;
+}
+
+.theme-sunset .footer {
+    background: rgba(255, 255, 255, 0.9);
+    border-top-color: rgba(255, 126, 95, 0.2);
+}
+
+.theme-sunset .footer .social-links a {
+    background: #ff7e5f;
+    color: white;
+}
+
+.theme-sunset .footer .social-links a:hover {
+    background: #feb47b;
+}
+
+@media (max-width: 768px) {
+    .theme-sunset .nav-menu {
+        background: rgba(255, 251, 248, 0.95);
+    }
+} 

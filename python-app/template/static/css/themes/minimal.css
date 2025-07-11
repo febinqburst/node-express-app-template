@@ -1,0 +1,212 @@
+/* Minimal Theme */
+.theme-minimal {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background-attachment: fixed;
+    color: #333;
+}
+
+.theme-minimal .navbar {
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.theme-minimal .nav-logo h2 {
+    color: #333;
+}
+
+.theme-minimal .nav-link {
+    color: #333;
+}
+
+.theme-minimal .nav-link:hover {
+    color: #666;
+}
+
+.theme-minimal .dropdown-content {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.theme-minimal .dropdown-content a {
+    color: #333;
+}
+
+.theme-minimal .dropdown-content a:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #666;
+}
+
+.theme-minimal .bar {
+    background: #333;
+}
+
+.theme-minimal .main-content {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px 20px 0 0;
+    margin-top: 80px;
+    backdrop-filter: blur(20px);
+}
+
+.theme-minimal .btn-primary {
+    background: #333;
+    color: white;
+    border: none;
+}
+
+.theme-minimal .btn-primary:hover {
+    background: #666;
+}
+
+.theme-minimal .btn-secondary {
+    background: transparent;
+    color: #333;
+    border: 2px solid #333;
+}
+
+.theme-minimal .btn-secondary:hover {
+    background: #333;
+    color: white;
+}
+
+.theme-minimal .feature-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.theme-minimal .feature-card:hover {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: #333;
+}
+
+.theme-minimal .feature-icon {
+    color: #333;
+}
+
+.theme-minimal .stat-number {
+    color: #333;
+}
+
+.theme-minimal .filter-btn {
+    color: #333;
+    border-color: #333;
+}
+
+.theme-minimal .filter-btn.active,
+.theme-minimal .filter-btn:hover {
+    background: #333;
+    color: white;
+}
+
+.theme-minimal .gallery-item {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.theme-minimal .portfolio-item {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.theme-minimal .tech-tag {
+    background: rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.theme-minimal .skill-category {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.theme-minimal .skill-item {
+    background: rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.theme-minimal .tech-item {
+    background: rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.theme-minimal .tech-item:hover {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.theme-minimal .stat {
+    background: rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.theme-minimal .timeline-items::before {
+    background: #333;
+}
+
+.theme-minimal .timeline-icon {
+    background: #333;
+    color: white;
+}
+
+.theme-minimal .timeline-content {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.theme-minimal .contact-item {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.theme-minimal .contact-icon {
+    background: #333;
+    color: white;
+}
+
+.theme-minimal .social-icon {
+    background: #333;
+    color: white;
+}
+
+.theme-minimal .social-icon:hover {
+    background: #666;
+}
+
+.theme-minimal .contact-form {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.theme-minimal .form-group input,
+.theme-minimal .form-group textarea {
+    border-color: rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.theme-minimal .form-group input:focus,
+.theme-minimal .form-group textarea:focus {
+    border-color: #333;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.theme-minimal .faq-item {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.theme-minimal .faq-question {
+    color: #333;
+}
+
+.theme-minimal .footer {
+    background: rgba(255, 255, 255, 0.9);
+    border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+.theme-minimal .footer .social-links a {
+    background: #333;
+    color: white;
+}
+
+.theme-minimal .footer .social-links a:hover {
+    background: #666;
+}
+
+@media (max-width: 768px) {
+    .theme-minimal .nav-menu {
+        background: rgba(255, 255, 255, 0.95);
+    }
+} 

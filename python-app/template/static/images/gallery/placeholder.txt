@@ -1,0 +1,23 @@
+# Gallery Images
+
+Place your gallery images here. The following images are referenced in the application:
+
+- nature1.jpg - Nature Scene: Beautiful landscape with mountains
+- ocean1.jpg - Ocean View: Peaceful ocean waves
+- city1.jpg - City Life: Modern city skyline
+- forest1.jpg - Forest Path: Serene forest walkway
+- desert1.jpg - Desert Sunset: Golden desert landscape
+- mountain1.jpg - Mountain Peak: Snow-capped mountain summit
+
+## Image Guidelines:
+- Resolution: 800x600px (4:3 aspect ratio)
+- Format: JPEG or WebP
+- File size: < 500KB per image
+- Quality: 85-90%
+
+## Categories:
+- nature: Nature scenes, landscapes, forests
+- city: Urban environments, buildings, streets
+- landscape: Wide scenic views, horizons
+
+You can replace these placeholder names with your actual image files. 

@@ -1,0 +1,380 @@
+{% extends "base.html" %}
+
+{% block title %}Themes - ${{ values.app_name | title }}{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-palette"></i> Choose Your Theme</h1>
+        <p>Customize your experience with one of our beautiful themes</p>
+    </div>
+</section>
+
+<section class="themes-showcase">
+    <div class="container">
+        <div class="current-theme">
+            <h2>Current Theme: {{ themes[current_theme].name }}</h2>
+            <p>{{ themes[current_theme].description }}</p>
+        </div>
+        
+        <div class="themes-grid">
+            {% for theme_key, theme_info in themes.items() %}
+            <div class="theme-card {% if theme_key == current_theme %}active{% endif %}">
+                <div class="theme-preview theme-{{ theme_key }}">
+                    <div class="preview-header">
+                        <div class="preview-nav">
+                            <div class="nav-item"></div>
+                            <div class="nav-item"></div>
+                            <div class="nav-item"></div>
+                        </div>
+                    </div>
+                    <div class="preview-content">
+                        <div class="preview-hero">
+                            <div class="hero-text">
+                                <div class="hero-title"></div>
+                                <div class="hero-subtitle"></div>
+                            </div>
+                        </div>
+                        <div class="preview-features">
+                            <div class="feature-item"></div>
+                            <div class="feature-item"></div>
+                            <div class="feature-item"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="theme-info">
+                    <h3>{{ theme_info.name }}</h3>
+                    <p>{{ theme_info.description }}</p>
+                    <div class="theme-actions">
+                        {% if theme_key == current_theme %}
+                            <span class="btn btn-primary btn-sm active-indicator">
+                                <i class="fas fa-check"></i> Active
+                            </span>
+                        {% else %}
+                            <a href="{{ url_for('home', theme=theme_key) }}" class="btn btn-secondary btn-sm">
+                                <i class="fas fa-paint-brush"></i> Apply Theme
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="theme-features">
+    <div class="container">
+        <h2>Theme Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h3>Custom Color Schemes</h3>
+                <p>Each theme features carefully crafted color palettes that enhance readability and visual appeal.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <h3>Adaptive Styling</h3>
+                <p>Themes automatically adjust backgrounds, text colors, and component styles for optimal contrast.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Responsive Design</h3>
+                <p>All themes maintain full responsiveness across desktop, tablet, and mobile devices.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                <h3>Instant Switching</h3>
+                <p>Switch between themes instantly with persistent selection across all pages.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="theme-customization">
+    <div class="container">
+        <h2>Theme Customization</h2>
+        <div class="customization-content">
+            <div class="customization-text">
+                <h3>Want to Create Your Own Theme?</h3>
+                <p>Our theming system is built with extensibility in mind. You can easily create custom themes by:</p>
+                <ul>
+                    <li>Adding new CSS files in the themes directory</li>
+                    <li>Following our CSS variable structure</li>
+                    <li>Updating the theme configuration in the application</li>
+                    <li>Testing across all components and pages</li>
+                </ul>
+                <p>Each theme consists of color variables, gradients, and component-specific styling that maintains consistency across the entire application.</p>
+            </div>
+            <div class="customization-code">
+                <h4>Example Theme Structure</h4>
+                <pre><code>/* Custom Theme */
+.theme-custom {
+    background: linear-gradient(135deg, #color1, #color2);
+    color: #text-color;
+}
+
+.theme-custom .navbar {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.theme-custom .btn-primary {
+    background: #primary-color;
+    color: white;
+}
+
+/* ... more styles ... */</code></pre>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.themes-showcase {
+    padding: 2rem 0;
+}
+
+.current-theme {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.current-theme h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.themes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.theme-card {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.theme-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.theme-card.active {
+    border: 3px solid #667eea;
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+.theme-preview {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-preview.theme-default {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.theme-preview.theme-dark {
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+}
+
+.theme-preview.theme-nature {
+    background: linear-gradient(135deg, #2E8B57 0%, #228B22 100%);
+}
+
+.theme-preview.theme-ocean {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+}
+
+.theme-preview.theme-sunset {
+    background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+}
+
+.theme-preview.theme-minimal {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.preview-header {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+}
+
+.preview-nav {
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-item {
+    width: 60px;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+}
+
+.preview-content {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    height: calc(100% - 60px);
+}
+
+.preview-hero {
+    margin-bottom: 1rem;
+}
+
+.hero-title {
+    width: 80%;
+    height: 12px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+    width: 60%;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+}
+
+.preview-features {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.feature-item {
+    width: 30%;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.theme-info {
+    padding: 1.5rem;
+}
+
+.theme-info h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.theme-info p {
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+.theme-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.active-indicator {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.theme-features {
+    padding: 3rem 0;
+}
+
+.theme-features h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    font-weight: 700;
+}
+
+.theme-customization {
+    padding: 3rem 0;
+}
+
+.theme-customization h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    font-weight: 700;
+}
+
+.customization-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.customization-text h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.customization-text ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.customization-text li {
+    margin-bottom: 0.5rem;
+}
+
+.customization-code {
+    background: rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.customization-code h4 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.customization-code pre {
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.customization-code code {
+    font-family: 'Courier New', monospace;
+}
+
+@media (max-width: 768px) {
+    .themes-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .customization-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .theme-features .features-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %} 

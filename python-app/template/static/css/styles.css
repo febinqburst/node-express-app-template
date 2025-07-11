@@ -1,0 +1,61 @@
+/* Additional CSS Styles for Python Pro Application */
+/* Main styles are embedded in the HTML template */
+
+/* Custom animations for enhanced user experience */
+@keyframes sparkle {
+    0% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.5); }
+}
+
+/* Hover effects for interactive elements */
+.interactive:hover {
+    animation: sparkle 0.5s ease-in-out;
+}
+
+/* Print styles */
+@media print {
+    .theme-selector,
+    .social-links,
+    .footer {
+        display: none !important;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
+    }
+    
+    .dashboard-card {
+        border: 1px solid #333 !important;
+        background: white !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .dashboard-card {
+        border-width: 2px !important;
+    }
+    
+    .theme-btn {
+        border-width: 3px !important;
+    }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Dark mode system preference fallback */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-color: #ffffff;
+        --bg-color: #1a1a1a;
+    }
+} 

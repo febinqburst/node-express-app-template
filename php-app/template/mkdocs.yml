@@ -1,0 +1,28 @@
+site_name: ${{ values.app_name | title }} Documentation
+site_description: Documentation for ${{ values.app_name | title }} PHP Web Application
+
+nav:
+  - Home: index.md
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      accent: deep purple
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: deep purple
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+markdown_extensions:
+  - codehilite
+  - admonition
+  - pymdownx.superfences

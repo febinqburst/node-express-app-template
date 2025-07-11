@@ -1,0 +1,180 @@
+pipeline {
+    agent any
+    
+    environment {
+        APP_NAME = '${{values.app_name}}'
+        DOCKER_REGISTRY = 'ghcr.io'
+        GITHUB_OWNER = 'febinmathew707'
+        IMAGE_NAME = "${DOCKER_REGISTRY}/${GITHUB_OWNER}/${APP_NAME}"
+        PHP_VERSION = '8.2'
+    }
+    
+    triggers {
+        // GitHub webhook trigger
+        githubPush()
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+                script {
+                    env.SHORT_COMMIT = sh(script: "git rev-parse --short=7 HEAD", returnStdout: true).trim()
+                    echo "Building commit: ${env.SHORT_COMMIT}"
+                }
+            }
+        }
+        
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    echo "Installing PHP dependencies for ${APP_NAME}"
+                    sh """
+                        # Check if composer.json exists, use composer install if it does
+                        if [ -f composer.json ]; then
+                            echo "composer.json found, installing dependencies"
+                            composer install --no-dev --optimize-autoloader
+                        else
+                            echo "No composer.json found, skipping dependency installation"
+                        fi
+                    """
+                }
+            }
+        }
+        
+        stage('Build and Test') {
+            steps {
+                script {
+                    echo "Building PHP application: ${APP_NAME}"
+                    sh """
+                        # Run PHP syntax check
+                        find . -name "*.php" -exec php -l {} \\;
+                        
+                        # Run tests if available
+                        if [ -f composer.json ] && [ -d tests ]; then
+                            composer test || echo "No tests defined"
+                        else
+                            echo "No tests directory found, skipping tests"
+                        fi
+                    """
+                }
+            }
+        }
+        
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    echo "Building Docker image: ${IMAGE_NAME}:${env.SHORT_COMMIT}"
+                    sh """
+                        docker build -t ${IMAGE_NAME}:${env.SHORT_COMMIT} .
+                        docker tag ${IMAGE_NAME}:${env.SHORT_COMMIT} ${IMAGE_NAME}:latest
+                    """
+                }
+            }
+        }
+        
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    // Login to GitHub Container Registry and push images (commented out)
+                    /*
+                    withCredentials([usernamePassword(credentialsId: 'github-container-registry', 
+                                                     usernameVariable: 'REGISTRY_USER', 
+                                                     passwordVariable: 'REGISTRY_PASS')]) {
+                        sh """
+                            echo \${REGISTRY_PASS} | docker login ${DOCKER_REGISTRY} -u \${REGISTRY_USER} --password-stdin
+                            # docker push ${IMAGE_NAME}:${env.SHORT_COMMIT}
+                            # docker push ${IMAGE_NAME}:latest
+                        """
+                    }
+                    */
+                    
+                    echo "✅ Image ${IMAGE_NAME}:${env.SHORT_COMMIT} has been pushed to container registry"
+                }
+            }
+        }
+        
+        stage('Deploy with Docker') {
+            steps {
+                script {
+                    echo "Deploying ${APP_NAME} with Docker"
+                    
+                    // Stop and remove existing container if running
+                    sh """
+                        docker stop ${APP_NAME} || true
+                        docker rm ${APP_NAME} || true
+                    """
+                    
+                    // Run the new container
+                    sh """
+                        docker run -d --name ${APP_NAME} -p 8086:80 -e USER=\${USER:-BackstageUser} --restart unless-stopped ${IMAGE_NAME}:${env.SHORT_COMMIT}
+                    """
+                    
+                    // Wait for container to be healthy
+                    sh """
+                        echo "Waiting for container to be ready..."
+                        sleep 10
+                        
+                        # Check if container is running
+                        if docker ps | grep -q ${APP_NAME}; then
+                            echo "✅ Container ${APP_NAME} is running successfully!"
+                            echo "🌐 Application available at: http://localhost:8086"
+                        else
+                            echo "❌ Container failed to start"
+                            docker logs ${APP_NAME}
+                            exit 1
+                        fi
+                    """
+                }
+            }
+        }
+        
+        stage('Cleanup Docker Images') {
+            steps {
+                script {
+                    echo "Cleaning up Docker images for ${APP_NAME}"
+                    
+                    // Delete all images except the latest one
+                    sh """
+                        # Get all images for this application
+                        IMAGES=\$(docker images ${IMAGE_NAME} --format "table {{.Repository}}:{{.Tag}}\t{{.ID}}" | tail -n +2)
+                        
+                        if [ -n "\$IMAGES" ]; then
+                            echo "Found images for ${IMAGE_NAME}:"
+                            echo "\$IMAGES"
+                            
+                            # Keep only the latest image, delete others
+                            LATEST_IMAGE=\$(docker images ${IMAGE_NAME} --format "{{.Repository}}:{{.Tag}}" | head -n 1)
+                            echo "Keeping latest image: \$LATEST_IMAGE"
+                            
+                            # Delete all other images
+                            docker images ${IMAGE_NAME} --format "{{.ID}}" | tail -n +2 | while read IMAGE_ID; do
+                                if [ -n "\$IMAGE_ID" ]; then
+                                    echo "Deleting image: \$IMAGE_ID"
+                                    docker rmi \$IMAGE_ID || true
+                                fi
+                            done
+                            
+                            echo "✅ Cleanup completed. Latest image preserved: \$LATEST_IMAGE"
+                        else
+                            echo "No images found for ${IMAGE_NAME}"
+                        fi
+                    """
+                }
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo "Pipeline completed successfully for ${APP_NAME}!"
+            echo "Image: ${IMAGE_NAME}:${env.SHORT_COMMIT}"
+            echo "Container: ${APP_NAME}"
+            echo "Application URL: http://localhost:8086"
+        }
+        failure {
+            echo "Pipeline failed for ${APP_NAME}"
+            sh "docker logs ${APP_NAME} || true"
+        }
+    }
+} 

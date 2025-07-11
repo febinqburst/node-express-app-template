@@ -693,13 +693,36 @@ COLORFUL_TEMPLATE = """
                     <span>Python Pro</span>
                 </div>
                 <div class="theme-selector">
-                    {% for theme_key, theme_data in themes.items() %}
-                    <div class="theme-btn {{ 'active' if theme_key == current_theme else '' }}" 
-                         style="background: {{ theme_data.background }}"
-                         onclick="changeTheme('{{ theme_key }}')"
-                         title="{{ theme_data.name }} - {{ theme_data.description }}">
+                    <div class="theme-btn active" 
+                         style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+                         onclick="changeTheme('aurora')"
+                         title="Aurora Theme">
                     </div>
-                    {% endfor %}
+                    <div class="theme-btn" 
+                         style="background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%)"
+                         onclick="changeTheme('sunset')"
+                         title="Sunset Theme">
+                    </div>
+                    <div class="theme-btn" 
+                         style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)"
+                         onclick="changeTheme('ocean')"
+                         title="Ocean Theme">
+                    </div>
+                    <div class="theme-btn" 
+                         style="background: linear-gradient(135deg, #134e5e 0%, #71b280 100%)"
+                         onclick="changeTheme('forest')"
+                         title="Forest Theme">
+                    </div>
+                    <div class="theme-btn" 
+                         style="background: linear-gradient(135deg, #8360c3 0%, #2ebf91 100%)"
+                         onclick="changeTheme('cosmic')"
+                         title="Cosmic Theme">
+                    </div>
+                    <div class="theme-btn" 
+                         style="background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%)"
+                         onclick="changeTheme('cherry')"
+                         title="Cherry Theme">
+                    </div>
                 </div>
             </div>
         </div>
@@ -867,6 +890,12 @@ COLORFUL_TEMPLATE = """
 
     <script>
         function changeTheme(theme) {
+            // Update active theme button
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Update URL and reload with new theme
             window.location.href = '/?theme=' + theme;
         }
 
@@ -897,6 +926,25 @@ COLORFUL_TEMPLATE = """
         document.querySelectorAll('.dashboard-card').forEach((card, index) => {
             card.style.animationDelay = `${index * 0.2}s`;
             card.classList.add('fade-in');
+        });
+        
+        // Update theme button states on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentTheme = urlParams.get('theme') || 'aurora';
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to current theme button
+            const themeButtons = document.querySelectorAll('.theme-btn');
+            const themes = ['aurora', 'sunset', 'ocean', 'forest', 'cosmic', 'cherry'];
+            const themeIndex = themes.indexOf(currentTheme);
+            if (themeIndex >= 0 && themeButtons[themeIndex]) {
+                themeButtons[themeIndex].classList.add('active');
+            }
         });
     </script>
 </body>

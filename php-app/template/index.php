@@ -53,7 +53,7 @@ switch ($path) {
                 
                 body {
                     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    background: linear-gradient(135deg, #ff6b6b 0%, #ffa726 25%, #26a69a 75%, #42a5f5 100%);
                     min-height: 100vh;
                     color: #333;
                 }
@@ -65,13 +65,13 @@ switch ($path) {
                 }
                 
                 .banner {
-                    background: linear-gradient(45deg, #8892BE, #4F5B93);
+                    background: linear-gradient(45deg, #ff5722, #ff6b6b, #26a69a);
                     color: white;
                     text-align: center;
                     padding: 30px 20px;
                     border-radius: 15px;
                     margin-bottom: 30px;
-                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                    box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
                     position: relative;
                     overflow: hidden;
                 }
@@ -92,6 +92,18 @@ switch ($path) {
                     100% { left: 100%; }
                 }
                 
+                @keyframes pulse {
+                    0% { transform: scale(1); }
+                    50% { transform: scale(1.05); }
+                    100% { transform: scale(1); }
+                }
+                
+                @keyframes glow {
+                    0% { box-shadow: 0 0 5px rgba(255, 107, 107, 0.5); }
+                    50% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.8), 0 0 30px rgba(38, 166, 154, 0.3); }
+                    100% { box-shadow: 0 0 5px rgba(255, 107, 107, 0.5); }
+                }
+                
                 .banner h1 {
                     font-size: 2.5rem;
                     margin-bottom: 10px;
@@ -108,11 +120,12 @@ switch ($path) {
                 }
                 
                 .main-content {
-                    background: white;
+                    background: linear-gradient(145deg, #ffffff, #fafafa);
                     border-radius: 15px;
                     padding: 40px;
-                    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+                    box-shadow: 0 15px 35px rgba(255, 107, 107, 0.15);
                     margin-bottom: 30px;
+                    border: 1px solid rgba(255, 107, 107, 0.1);
                 }
                 
                 .php-logo {
@@ -124,7 +137,14 @@ switch ($path) {
                     width: 120px;
                     height: 120px;
                     margin-bottom: 20px;
-                    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+                    filter: drop-shadow(0 5px 15px rgba(255, 107, 107, 0.3));
+                    animation: pulse 2s infinite;
+                    transition: all 0.3s ease;
+                }
+                
+                .php-logo svg:hover {
+                    animation: glow 1s infinite;
+                    transform: scale(1.1);
                 }
                 
                 .app-info {
@@ -135,20 +155,23 @@ switch ($path) {
                 }
                 
                 .info-card {
-                    background: linear-gradient(145deg, #f0f0f0, #e6e6e6);
+                    background: linear-gradient(145deg, #fff3e0, #fce4ec);
                     padding: 25px;
                     border-radius: 12px;
                     text-align: center;
-                    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+                    box-shadow: 5px 5px 15px rgba(255, 107, 107, 0.2);
                     transition: transform 0.3s ease;
+                    border: 2px solid transparent;
                 }
                 
                 .info-card:hover {
                     transform: translateY(-5px);
+                    border: 2px solid #ff6b6b;
+                    box-shadow: 5px 5px 20px rgba(255, 107, 107, 0.3);
                 }
                 
                 .info-card h3 {
-                    color: #8892BE;
+                    color: #ff5722;
                     margin-bottom: 15px;
                     font-size: 1.3rem;
                 }
@@ -159,17 +182,19 @@ switch ($path) {
                 }
                 
                 .api-endpoints {
-                    background: #f8f9fa;
+                    background: linear-gradient(135deg, #e8f5e8, #f3e5f5);
                     padding: 30px;
                     border-radius: 12px;
                     margin-bottom: 30px;
+                    border: 2px solid rgba(38, 166, 154, 0.2);
                 }
                 
                 .api-endpoints h2 {
-                    color: #8892BE;
+                    color: #26a69a;
                     margin-bottom: 20px;
                     text-align: center;
                     font-size: 1.8rem;
+                    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
                 }
                 
                 .endpoint-list {
@@ -181,25 +206,27 @@ switch ($path) {
                     background: white;
                     padding: 20px;
                     border-radius: 8px;
-                    border-left: 4px solid #8892BE;
-                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+                    border-left: 4px solid #ff6b6b;
+                    box-shadow: 0 2px 10px rgba(255, 107, 107, 0.1);
                     transition: all 0.3s ease;
                 }
                 
                 .endpoint:hover {
                     transform: translateX(10px);
-                    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+                    box-shadow: 0 5px 20px rgba(255, 107, 107, 0.2);
+                    border-left: 4px solid #26a69a;
                 }
                 
                 .endpoint-url {
                     font-family: 'Courier New', monospace;
-                    background: #e9ecef;
+                    background: linear-gradient(135deg, #ffebee, #e8f5e8);
                     padding: 8px 12px;
                     border-radius: 4px;
                     display: inline-block;
                     margin-bottom: 8px;
-                    color: #8892BE;
+                    color: #26a69a;
                     font-weight: bold;
+                    border: 1px solid rgba(38, 166, 154, 0.2);
                 }
                 
                 .endpoint-desc {
@@ -215,7 +242,8 @@ switch ($path) {
                 }
                 
                 .status-badge {
-                    background: linear-gradient(45deg, #8892BE, #4F5B93);
+                    background: linear-gradient(45deg, #ff6b6b, #26a69a, #ff6b6b);
+                    background-size: 300% 100%;
                     color: white;
                     padding: 8px 16px;
                     border-radius: 20px;
@@ -223,7 +251,15 @@ switch ($path) {
                     font-weight: bold;
                     display: inline-block;
                     margin-top: 10px;
-                    box-shadow: 0 3px 10px rgba(136, 146, 190, 0.3);
+                    box-shadow: 0 3px 10px rgba(255, 107, 107, 0.4);
+                    border: 2px solid rgba(255, 255, 255, 0.2);
+                    animation: gradient-shift 3s ease infinite;
+                }
+                
+                @keyframes gradient-shift {
+                    0% { background-position: 0% 50%; }
+                    50% { background-position: 100% 50%; }
+                    100% { background-position: 0% 50%; }
                 }
                 
                 @media (max-width: 768px) {
@@ -244,19 +280,26 @@ switch ($path) {
         <body>
             <div class="container">
                 <div class="banner">
-                    <h1>🚀 Welcome to PHP Demo Application</h1>
-                    <p>Powered by PHP & Apache | Built with ❤️</p>
+                    <h1>🎉 Welcome to PHP Demo Application</h1>
+                    <p>✨ Powered by PHP & Apache | Built with 💖 & Modern Design</p>
                 </div>
                 
                 <div class="main-content">
                     <div class="php-logo">
                         <svg viewBox="0 0 256 134" xmlns="http://www.w3.org/2000/svg">
-                            <path fill="#8892BE" d="M128 0C57.308 0 0 30.135 0 67.333C0 104.531 57.308 134.667 128 134.667C198.692 134.667 256 104.531 256 67.333C256 30.135 198.692 0 128 0Z"/>
+                            <defs>
+                                <linearGradient id="phpGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:#ffa726;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#26a69a;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <path fill="url(#phpGradient)" d="M128 0C57.308 0 0 30.135 0 67.333C0 104.531 57.308 134.667 128 134.667C198.692 134.667 256 104.531 256 67.333C256 30.135 198.692 0 128 0Z"/>
                             <path fill="#FFF" d="M32.305 84.044c-1.724 9.014-8.262 9.014-14.928 9.014H13.63l3.448-17.802h3.78c7.772 0 12.062 0 14.11 3.862c1.434 2.706 1.026 4.926-2.663 4.926zm7.31-14.486c-2.768-4.618-7.93-6.522-14.694-6.522H9.423c-1.26 0-2.34.906-2.58 2.147L.234 100.051c-.21 1.084.541 2.081 1.659 2.081h7.54c1.26 0 2.34-.906 2.58-2.147l1.713-8.842h5.932c10.617 0 18.486-3.129 21.618-14.19C43.205 71.032 42.593 67.104 39.615 69.558z"/>
                             <path fill="#FFF" d="M74.089 84.044c-1.724 9.014-8.262 9.014-14.928 9.014H55.414l3.448-17.802h3.78c7.772 0 12.062 0 14.11 3.862c1.434 2.706 1.026 4.926-2.663 4.926zm7.31-14.486c-2.768-4.618-7.93-6.522-14.694-6.522H51.207c-1.26 0-2.34.906-2.58 2.147L42.018 100.051c-.21 1.084.541 2.081 1.659 2.081h7.54c1.26 0 2.34-.906 2.58-2.147l1.713-8.842h5.932c10.617 0 18.486-3.129 21.618-14.19C84.989 71.032 84.377 67.104 81.399 69.558z"/>
                             <path fill="#FFF" d="M134.906 102.132h-7.54c-1.118 0-1.869-.997-1.659-2.081l6.609-34.868c.24-1.241 1.32-2.147 2.58-2.147h7.54c1.118 0 1.869.997 1.659 2.081l-1.378 7.276h5.932c10.617 0 18.486 3.129 21.618 14.19c2.929 10.421 2.317 14.349-.661 11.895c-2.768 4.618-7.93 6.522-14.694 6.522h-14.498c-1.26 0-2.34-.906-2.58-2.147l-1.378-7.276h-5.932c-7.772 0-12.062 0-14.11-3.862c-1.434-2.706-1.026-4.926 2.663-4.926c1.724-9.014 8.262-9.014 14.928-9.014h3.747l-3.448 17.802h-3.78z"/>
                         </svg>
-                        <h2 style="color: #8892BE; margin-top: 10px;">PHP Web Application</h2>
+                        <h2 style="color: #ff5722; margin-top: 10px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">PHP Web Application</h2>
                         <div class="status-badge">🟢 Application Running</div>
                     </div>
                     

@@ -4,12 +4,23 @@ FROM python:3.11-slim
 # Set working directory inside container
 WORKDIR /app
 
-# Copy requirements and install dependencies
+# Copy requirements first for better Docker layer caching
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the Python application
+# Install system dependencies, Python packages, then cleanup in one layer
+RUN apt-get update && apt-get install -y \
+    gcc \
+    python3-dev \
+    --no-install-recommends && \
+    pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt && \
+    apt-get remove -y gcc python3-dev && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy the Python application and static files
 COPY app.py .
+COPY static/ static/
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1

@@ -30,12 +30,26 @@ pipeline {
                 script {
                     echo "Installing PHP dependencies for ${APP_NAME}"
                     sh """
-                        # Check if composer.json exists, use composer install if it does
-                        if [ -f composer.json ]; then
-                            echo "composer.json found, installing dependencies"
-                            composer install --no-dev --optimize-autoloader
+                        # Check if composer is available
+                        if command -v composer >/dev/null 2>&1; then
+                            echo "Composer found, installing dependencies"
+                            if [ -f composer.json ]; then
+                                composer install --no-dev --optimize-autoloader
+                            else
+                                echo "No composer.json found, skipping dependency installation"
+                            fi
                         else
-                            echo "No composer.json found, skipping dependency installation"
+                            echo "Composer not found, installing composer..."
+                            # Install composer
+                            curl -sS https://getcomposer.org/installer | php
+                            chmod +x composer.phar
+                            
+                            if [ -f composer.json ]; then
+                                echo "Installing dependencies with composer.phar"
+                                php composer.phar install --no-dev --optimize-autoloader
+                            else
+                                echo "No composer.json found, skipping dependency installation"
+                            fi
                         fi
                     """
                 }
@@ -52,7 +66,13 @@ pipeline {
                         
                         # Run tests if available
                         if [ -f composer.json ] && [ -d tests ]; then
-                            composer test || echo "No tests defined"
+                            if command -v composer >/dev/null 2>&1; then
+                                composer test || echo "No tests defined"
+                            elif [ -f composer.phar ]; then
+                                php composer.phar test || echo "No tests defined"
+                            else
+                                echo "Neither composer nor composer.phar found, skipping tests"
+                            fi
                         else
                             echo "No tests directory found, skipping tests"
                         fi

@@ -24,7 +24,7 @@
                         </div>
                         <div class="contact-text">
                             <h3>Email</h3>
-                            <p>contact@${{ values.app_name | lower }}.com</p>
+                            <p>contact@{{ values.app_name | lower }}.com</p>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -138,34 +138,30 @@
     </div>
 </section>
 
-{% block extra_js %}
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('Thank you for your message! We will get back to you soon.');
-        this.reset();
-    });
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Thank you for your message! We will get back to you soon.');
+    this.reset();
+});
 
-    // FAQ accordion
-    document.querySelectorAll('.faq-question').forEach(question => {
-        question.addEventListener('click', function() {
-            const faqItem = this.parentElement;
-            const answer = faqItem.querySelector('.faq-answer');
-            const icon = this.querySelector('i');
-            
-            faqItem.classList.toggle('active');
-            
-            if (faqItem.classList.contains('active')) {
-                answer.style.display = 'block';
-                icon.style.transform = 'rotate(180deg)';
-            } else {
-                answer.style.display = 'none';
-                icon.style.transform = 'rotate(0deg)';
-            }
-        });
+// FAQ accordion
+document.querySelectorAll('.faq-question').forEach(question => {
+    question.addEventListener('click', function() {
+        const faqItem = this.parentElement;
+        const answer = faqItem.querySelector('.faq-answer');
+        const icon = this.querySelector('i');
+        
+        faqItem.classList.toggle('active');
+        
+        if (faqItem.classList.contains('active')) {
+            answer.style.display = 'block';
+            icon.style.transform = 'rotate(180deg)';
+        } else {
+            answer.style.display = 'none';
+            icon.style.transform = 'rotate(0deg)';
+        }
     });
 });
 </script>
-{% endblock %}
 {% endblock %} 

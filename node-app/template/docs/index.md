@@ -4,7 +4,15 @@ Welcome to the ${{ values.app_name | title }} application documentation.
 
 ## Overview
 
-This is a Node.js Express web application that provides REST API endpoints with dynamic data and user greetings. It's designed to be deployed using Docker containers and managed through Jenkins CI/CD pipelines.
+This is a beautiful Node.js Express web application that provides both a stunning web interface and REST API endpoints with dynamic data and user greetings. The application features a modern, responsive UI with gradient backgrounds, animations, and the official Node.js logo. It's designed to be deployed using Docker containers and managed through Jenkins CI/CD pipelines.
+
+### 🎨 Visual Features
+
+- **Beautiful Web Interface** - Modern, responsive design with gradient backgrounds
+- **Welcome Banner** - Animated banner saying "Welcome to Node Express Demo Application"
+- **Node.js Logo** - Official Node.js logo with professional styling
+- **Interactive Elements** - Hover effects and smooth transitions
+- **Mobile Responsive** - Works perfectly on all devices
 
 ## Getting Started
 
@@ -21,12 +29,20 @@ This is a Node.js Express web application that provides REST API endpoints with 
 2. Install dependencies: `npm install`
 3. Start the application: `npm start`
 
-## API Documentation
+## Interface Documentation
 
-### Endpoints
+### 🌐 Web Interface
 
 #### GET /
-Returns application information and available endpoints.
+Returns a beautiful, responsive web page featuring:
+- **Welcome Banner** - Animated banner with "Welcome to Node Express Demo Application"
+- **Node.js Logo** - Official Node.js logo with styling effects
+- **Application Information** - User greeting, current time, and app status
+- **API Documentation** - Interactive endpoint documentation
+- **Modern Design** - Gradient backgrounds, cards, and smooth animations
+- **Mobile Responsive** - Optimized for all device sizes
+
+### 🔗 API Endpoints
 
 #### GET /api/details
 Returns detailed information including:
@@ -46,6 +62,12 @@ Returns system statistics including:
 - Platform information
 - Memory usage
 - Process uptime
+
+#### GET /api/json
+Returns complete application information in JSON format including:
+- All data from other endpoints
+- Available endpoints list
+- Application metadata
 
 ## Configuration
 

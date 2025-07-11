@@ -2,7 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: ${{ values.app_name }}
-  description: Node.js Express API with Docker deployment and Jenkins CI/CD
+  description: Beautiful Node.js Express Web Application with Modern UI, API endpoints, Docker deployment and Jenkins CI/CD
   annotations:
     github.com/project-slug: febinmathew707/${{ values.app_name }}
     backstage.io/techdocs-ref: dir:.

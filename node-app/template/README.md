@@ -1,23 +1,31 @@
 # ${{ values.app_name | title }} Web Application
 
-A Node.js Express web application for Backstage demo that provides REST API endpoints with dynamic data and user greetings.
+A beautiful Node.js Express web application for Backstage demo that provides both a stunning web interface and REST API endpoints with dynamic data and user greetings.
 
 ## Features
 
-- REST API endpoints with JSON responses
-- Real-time date and time data
-- Personalized greeting using environment variable
-- Health check endpoint with uptime information
-- System statistics endpoint
-- Dockerized for easy deployment
-- Jenkins CI/CD pipeline with Docker deployment
+- 🎨 **Beautiful Web Interface** - Modern, responsive UI with gradient backgrounds and animations
+- 🚀 **Welcome Banner** - Eye-catching banner with "Welcome to Node Express Demo Application"
+- 🟢 **Node.js Logo** - Official Node.js logo with professional styling
+- 📱 **Responsive Design** - Mobile-friendly interface that works on all devices
+- 🔗 **REST API Endpoints** - Full JSON API support for programmatic access
+- ⏰ **Real-time Data** - Live date, time, and system information
+- 👋 **Personalized Greeting** - Dynamic user greeting using environment variables
+- 💚 **Health Check** - Beautiful status indicators and uptime information
+- 📊 **System Statistics** - Node.js version, memory usage, and platform info
+- 🐳 **Dockerized** - Easy deployment with Docker containerization
+- 🔧 **Jenkins CI/CD** - Automated pipeline with Docker deployment
 
-## API Endpoints
+## Web Interface & API Endpoints
 
-- `GET /` - Application info and available endpoints
+### 🌐 Web Interface
+- `GET /` - **Beautiful web dashboard** with Node.js logo, welcome banner, and interactive UI
+
+### 🔗 API Endpoints
 - `GET /api/details` - Get detailed information including time, date, and user greeting
-- `GET /health` - Health check endpoint with uptime
-- `GET /api/stats` - Get system statistics and Node.js info
+- `GET /health` - Health check endpoint with uptime information
+- `GET /api/stats` - Get system statistics including Node.js version and memory usage
+- `GET /api/json` - Get all information in JSON format (original API response)
 
 ## Running Locally
 
@@ -37,20 +45,39 @@ npm run dev
 
 The application will start on `http://localhost:8085`
 
-## Testing the API
+🎉 **Visit the beautiful web interface at:** `http://localhost:8085`
 
+## Using the Application
+
+### 🌐 Web Interface
+Simply open your browser and visit:
+```
+http://localhost:8085
+```
+
+Enjoy the beautiful, responsive web interface with:
+- 🎨 Gradient background and modern design
+- 🚀 Animated welcome banner  
+- 🟢 Official Node.js logo
+- 📊 Real-time application information
+- 🔗 Interactive API endpoint documentation
+
+### 🔗 API Testing
 ```bash
-# Get application details
+# Beautiful web interface
+curl http://localhost:8085/
+
+# Get application details (JSON)
 curl http://localhost:8085/api/details
 
 # Health check
 curl http://localhost:8085/health
 
-# Application info
-curl http://localhost:8085/
-
 # System statistics
 curl http://localhost:8085/api/stats
+
+# Complete JSON response
+curl http://localhost:8085/api/json
 ```
 
 ## Running with Docker

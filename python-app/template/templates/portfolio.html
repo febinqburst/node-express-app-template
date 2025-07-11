@@ -16,7 +16,7 @@
             {% for project in projects %}
             <div class="portfolio-item">
                 <div class="portfolio-image">
-                    <img src="{{ url_for('static', filename='images/portfolio/' + project.image) }}" 
+                    <img src="/static/images/portfolio/{{ project.image }}" 
                          alt="{{ project.name }}" 
                          loading="lazy">
                     <div class="portfolio-overlay">

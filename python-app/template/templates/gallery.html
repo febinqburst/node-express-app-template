@@ -23,7 +23,7 @@
             {% for image in images %}
             <div class="gallery-item" data-category="nature">
                 <div class="gallery-image">
-                    <img src="{{ url_for('static', filename='images/gallery/' + image.filename) }}" 
+                    <img src="/static/images/gallery/{{ image.filename }}" 
                          alt="{{ image.name }}" 
                          loading="lazy">
                     <div class="gallery-overlay">
@@ -62,7 +62,7 @@ function openModal(filename, name, description) {
     const modalDescription = document.getElementById('modalDescription');
     
     modal.style.display = 'block';
-    modalImg.src = "{{ url_for('static', filename='images/gallery/') }}" + filename;
+    modalImg.src = "/static/images/gallery/" + filename;
     modalTitle.textContent = name;
     modalDescription.textContent = description;
 }

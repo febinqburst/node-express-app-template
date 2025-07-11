@@ -43,7 +43,7 @@ switch ($path) {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title><?= "${{ values.app_name | title }}" ?> - PHP Demo Application</title>
+            <title><?= "${{ values.app_name | title }}" ?> - Enterprise PHP Application</title>
             <style>
                 * {
                     margin: 0;
@@ -52,305 +52,573 @@ switch ($path) {
                 }
                 
                 body {
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                    background: linear-gradient(135deg, #ff6b6b 0%, #ffa726 25%, #26a69a 75%, #42a5f5 100%);
-                    min-height: 100vh;
-                    color: #333;
+                    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    background: #0a0a0a;
+                    color: #ffffff;
+                    line-height: 1.6;
+                    overflow-x: hidden;
                 }
                 
-                .container {
-                    max-width: 1200px;
-                    margin: 0 auto;
+                .sidebar {
+                    position: fixed;
+                    left: 0;
+                    top: 0;
+                    width: 280px;
+                    height: 100vh;
+                    background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+                    border-right: 1px solid #333;
+                    z-index: 1000;
+                    overflow-y: auto;
+                }
+                
+                .sidebar-header {
+                    padding: 30px 20px;
+                    border-bottom: 1px solid #333;
+                    text-align: center;
+                    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+                    position: relative;
+                }
+                
+                .sidebar-header::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+                    animation: slide 3s infinite;
+                }
+                
+                @keyframes slide {
+                    0% { transform: translateX(-100%); }
+                    100% { transform: translateX(100%); }
+                }
+                
+                .logo {
+                    font-size: 24px;
+                    font-weight: 800;
+                    color: #ffffff;
+                    margin-bottom: 8px;
+                    position: relative;
+                    z-index: 1;
+                }
+                
+                .logo::before {
+                    content: '<?';
+                    color: #22d3ee;
+                    margin-right: 5px;
+                }
+                
+                .logo::after {
+                    content: '?>';
+                    color: #22d3ee;
+                    margin-left: 5px;
+                }
+                
+                .version {
+                    font-size: 12px;
+                    color: #94a3b8;
+                    position: relative;
+                    z-index: 1;
+                }
+                
+                .nav-section {
                     padding: 20px;
                 }
                 
-                .banner {
-                    background: linear-gradient(45deg, #ff5722, #ff6b6b, #26a69a);
-                    color: white;
-                    text-align: center;
-                    padding: 30px 20px;
-                    border-radius: 15px;
-                    margin-bottom: 30px;
-                    box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+                .nav-title {
+                    font-size: 11px;
+                    color: #64748b;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    margin-bottom: 12px;
+                    font-weight: 600;
+                }
+                
+                .nav-item {
+                    display: flex;
+                    align-items: center;
+                    padding: 12px 16px;
+                    margin-bottom: 6px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    border: 1px solid transparent;
+                }
+                
+                .nav-item:hover {
+                    background: rgba(79, 70, 229, 0.1);
+                    border-color: #4f46e5;
+                    transform: translateX(5px);
+                }
+                
+                .nav-item.active {
+                    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+                    border-color: #4f46e5;
+                }
+                
+                .nav-icon {
+                    width: 18px;
+                    height: 18px;
+                    margin-right: 12px;
+                    opacity: 0.7;
+                }
+                
+                .nav-text {
+                    font-size: 14px;
+                    color: #e2e8f0;
+                }
+                
+                .main-content {
+                    margin-left: 280px;
+                    min-height: 100vh;
+                    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+                    position: relative;
+                }
+                
+                .main-content::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23334155" stroke-width="0.5" opacity="0.3"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+                    opacity: 0.3;
+                    pointer-events: none;
+                }
+                
+                .header {
+                    padding: 40px 50px;
+                    background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(124, 58, 237, 0.1));
+                    border-bottom: 1px solid #334155;
+                    position: relative;
+                    z-index: 1;
+                }
+                
+                .header-content {
+                    max-width: 1200px;
+                    margin: 0 auto;
+                }
+                
+                .header-title {
+                    font-size: 48px;
+                    font-weight: 900;
+                    background: linear-gradient(135deg, #22d3ee, #4f46e5);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                    margin-bottom: 12px;
+                    letter-spacing: -1px;
+                }
+                
+                .header-subtitle {
+                    font-size: 18px;
+                    color: #94a3b8;
+                    margin-bottom: 24px;
+                }
+                
+                .status-indicator {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 8px 16px;
+                    background: rgba(34, 211, 238, 0.1);
+                    border: 1px solid #22d3ee;
+                    border-radius: 50px;
+                    font-size: 14px;
+                    font-weight: 600;
+                }
+                
+                .status-dot {
+                    width: 8px;
+                    height: 8px;
+                    background: #22d3ee;
+                    border-radius: 50%;
+                    animation: pulse-dot 2s infinite;
+                }
+                
+                @keyframes pulse-dot {
+                    0% { opacity: 1; transform: scale(1); }
+                    50% { opacity: 0.5; transform: scale(1.2); }
+                    100% { opacity: 1; transform: scale(1); }
+                }
+                
+                .dashboard {
+                    padding: 50px;
+                    position: relative;
+                    z-index: 1;
+                }
+                
+                .dashboard-grid {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 30px;
+                    max-width: 1200px;
+                    margin: 0 auto;
+                }
+                
+                .dashboard-card {
+                    background: rgba(30, 41, 59, 0.8);
+                    backdrop-filter: blur(10px);
+                    border: 1px solid #334155;
+                    border-radius: 16px;
+                    padding: 30px;
+                    transition: all 0.3s ease;
                     position: relative;
                     overflow: hidden;
                 }
                 
-                .banner::before {
+                .dashboard-card::before {
                     content: '';
                     position: absolute;
                     top: 0;
-                    left: -100%;
-                    width: 100%;
-                    height: 100%;
-                    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-                    animation: shine 3s infinite;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(124, 58, 237, 0.1));
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
                 }
                 
-                @keyframes shine {
-                    0% { left: -100%; }
-                    100% { left: 100%; }
-                }
-                
-                @keyframes pulse {
-                    0% { transform: scale(1); }
-                    50% { transform: scale(1.05); }
-                    100% { transform: scale(1); }
-                }
-                
-                @keyframes glow {
-                    0% { box-shadow: 0 0 5px rgba(255, 107, 107, 0.5); }
-                    50% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.8), 0 0 30px rgba(38, 166, 154, 0.3); }
-                    100% { box-shadow: 0 0 5px rgba(255, 107, 107, 0.5); }
-                }
-                
-                .banner h1 {
-                    font-size: 2.5rem;
-                    margin-bottom: 10px;
-                    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-                    position: relative;
-                    z-index: 1;
-                }
-                
-                .banner p {
-                    font-size: 1.2rem;
-                    opacity: 0.9;
-                    position: relative;
-                    z-index: 1;
-                }
-                
-                .main-content {
-                    background: linear-gradient(145deg, #ffffff, #fafafa);
-                    border-radius: 15px;
-                    padding: 40px;
-                    box-shadow: 0 15px 35px rgba(255, 107, 107, 0.15);
-                    margin-bottom: 30px;
-                    border: 1px solid rgba(255, 107, 107, 0.1);
-                }
-                
-                .php-logo {
-                    text-align: center;
-                    margin-bottom: 30px;
-                }
-                
-                .php-logo svg {
-                    width: 120px;
-                    height: 120px;
-                    margin-bottom: 20px;
-                    filter: drop-shadow(0 5px 15px rgba(255, 107, 107, 0.3));
-                    animation: pulse 2s infinite;
-                    transition: all 0.3s ease;
-                }
-                
-                .php-logo svg:hover {
-                    animation: glow 1s infinite;
-                    transform: scale(1.1);
-                }
-                
-                .app-info {
-                    display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                    gap: 30px;
-                    margin-bottom: 40px;
-                }
-                
-                .info-card {
-                    background: linear-gradient(145deg, #fff3e0, #fce4ec);
-                    padding: 25px;
-                    border-radius: 12px;
-                    text-align: center;
-                    box-shadow: 5px 5px 15px rgba(255, 107, 107, 0.2);
-                    transition: transform 0.3s ease;
-                    border: 2px solid transparent;
-                }
-                
-                .info-card:hover {
+                .dashboard-card:hover {
                     transform: translateY(-5px);
-                    border: 2px solid #ff6b6b;
-                    box-shadow: 5px 5px 20px rgba(255, 107, 107, 0.3);
+                    border-color: #4f46e5;
+                    box-shadow: 0 20px 40px rgba(79, 70, 229, 0.2);
                 }
                 
-                .info-card h3 {
-                    color: #ff5722;
-                    margin-bottom: 15px;
-                    font-size: 1.3rem;
+                .dashboard-card:hover::before {
+                    opacity: 1;
                 }
                 
-                .info-card p {
-                    color: #666;
-                    line-height: 1.6;
-                }
-                
-                .api-endpoints {
-                    background: linear-gradient(135deg, #e8f5e8, #f3e5f5);
-                    padding: 30px;
-                    border-radius: 12px;
-                    margin-bottom: 30px;
-                    border: 2px solid rgba(38, 166, 154, 0.2);
-                }
-                
-                .api-endpoints h2 {
-                    color: #26a69a;
+                .card-header {
+                    display: flex;
+                    align-items: center;
                     margin-bottom: 20px;
-                    text-align: center;
-                    font-size: 1.8rem;
-                    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+                    position: relative;
+                    z-index: 1;
                 }
                 
-                .endpoint-list {
+                .card-icon {
+                    width: 24px;
+                    height: 24px;
+                    margin-right: 12px;
+                }
+                
+                .card-title {
+                    font-size: 20px;
+                    font-weight: 700;
+                    color: #f1f5f9;
+                }
+                
+                .card-content {
+                    position: relative;
+                    z-index: 1;
+                }
+                
+                .metric {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 12px 0;
+                    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+                }
+                
+                .metric:last-child {
+                    border-bottom: none;
+                }
+                
+                .metric-label {
+                    font-size: 14px;
+                    color: #94a3b8;
+                }
+                
+                .metric-value {
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: #f1f5f9;
+                }
+                
+                .api-section {
+                    grid-column: span 2;
+                    background: rgba(30, 41, 59, 0.8);
+                    backdrop-filter: blur(10px);
+                    border: 1px solid #334155;
+                    border-radius: 16px;
+                    padding: 30px;
+                    position: relative;
+                    overflow: hidden;
+                }
+                
+                .api-section::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: linear-gradient(135deg, rgba(34, 211, 238, 0.05), rgba(79, 70, 229, 0.05));
+                    opacity: 1;
+                }
+                
+                .api-title {
+                    font-size: 24px;
+                    font-weight: 700;
+                    color: #f1f5f9;
+                    margin-bottom: 20px;
+                    position: relative;
+                    z-index: 1;
+                }
+                
+                .api-grid {
                     display: grid;
-                    gap: 15px;
+                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                    gap: 20px;
+                    position: relative;
+                    z-index: 1;
                 }
                 
-                .endpoint {
-                    background: white;
+                .api-endpoint {
+                    background: rgba(15, 23, 42, 0.8);
+                    border: 1px solid #334155;
+                    border-radius: 12px;
                     padding: 20px;
-                    border-radius: 8px;
-                    border-left: 4px solid #ff6b6b;
-                    box-shadow: 0 2px 10px rgba(255, 107, 107, 0.1);
                     transition: all 0.3s ease;
+                    position: relative;
+                    overflow: hidden;
                 }
                 
-                .endpoint:hover {
-                    transform: translateX(10px);
-                    box-shadow: 0 5px 20px rgba(255, 107, 107, 0.2);
-                    border-left: 4px solid #26a69a;
+                .api-endpoint::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 4px;
+                    height: 100%;
+                    background: linear-gradient(135deg, #22d3ee, #4f46e5);
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
                 }
                 
-                .endpoint-url {
-                    font-family: 'Courier New', monospace;
-                    background: linear-gradient(135deg, #ffebee, #e8f5e8);
-                    padding: 8px 12px;
-                    border-radius: 4px;
+                .api-endpoint:hover {
+                    border-color: #22d3ee;
+                    transform: translateY(-2px);
+                }
+                
+                .api-endpoint:hover::before {
+                    opacity: 1;
+                }
+                
+                .api-method {
                     display: inline-block;
+                    padding: 4px 8px;
+                    background: rgba(34, 211, 238, 0.1);
+                    border: 1px solid #22d3ee;
+                    border-radius: 6px;
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: #22d3ee;
                     margin-bottom: 8px;
-                    color: #26a69a;
-                    font-weight: bold;
-                    border: 1px solid rgba(38, 166, 154, 0.2);
                 }
                 
-                .endpoint-desc {
-                    color: #666;
-                    font-size: 0.95rem;
+                .api-path {
+                    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: #f1f5f9;
+                    margin-bottom: 8px;
+                }
+                
+                .api-description {
+                    font-size: 14px;
+                    color: #94a3b8;
+                    line-height: 1.5;
                 }
                 
                 .footer {
+                    padding: 30px 50px;
                     text-align: center;
-                    color: white;
-                    opacity: 0.8;
-                    margin-top: 40px;
-                }
-                
-                .status-badge {
-                    background: linear-gradient(45deg, #ff6b6b, #26a69a, #ff6b6b);
-                    background-size: 300% 100%;
-                    color: white;
-                    padding: 8px 16px;
-                    border-radius: 20px;
-                    font-size: 0.9rem;
-                    font-weight: bold;
-                    display: inline-block;
-                    margin-top: 10px;
-                    box-shadow: 0 3px 10px rgba(255, 107, 107, 0.4);
-                    border: 2px solid rgba(255, 255, 255, 0.2);
-                    animation: gradient-shift 3s ease infinite;
-                }
-                
-                @keyframes gradient-shift {
-                    0% { background-position: 0% 50%; }
-                    50% { background-position: 100% 50%; }
-                    100% { background-position: 0% 50%; }
+                    border-top: 1px solid #334155;
+                    color: #64748b;
+                    font-size: 14px;
+                    position: relative;
+                    z-index: 1;
                 }
                 
                 @media (max-width: 768px) {
-                    .banner h1 {
-                        font-size: 1.8rem;
+                    .sidebar {
+                        width: 100%;
+                        height: auto;
+                        position: relative;
                     }
                     
                     .main-content {
+                        margin-left: 0;
+                    }
+                    
+                    .dashboard-grid {
+                        grid-template-columns: 1fr;
+                    }
+                    
+                    .api-section {
+                        grid-column: span 1;
+                    }
+                    
+                    .header {
                         padding: 20px;
                     }
                     
-                    .container {
-                        padding: 10px;
+                    .dashboard {
+                        padding: 20px;
+                    }
+                    
+                    .header-title {
+                        font-size: 32px;
                     }
                 }
             </style>
         </head>
         <body>
-            <div class="container">
-                <div class="banner">
-                    <h1>🎉 Welcome to PHP Demo Application</h1>
-                    <p>✨ Powered by PHP & Apache | Built with 💖 & Modern Design</p>
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <div class="logo">PHP Pro</div>
+                    <div class="version">v<?= phpversion() ?></div>
                 </div>
                 
-                <div class="main-content">
-                    <div class="php-logo">
-                        <svg viewBox="0 0 256 134" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <linearGradient id="phpGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
-                                    <stop offset="50%" style="stop-color:#ffa726;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#26a69a;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                            <path fill="url(#phpGradient)" d="M128 0C57.308 0 0 30.135 0 67.333C0 104.531 57.308 134.667 128 134.667C198.692 134.667 256 104.531 256 67.333C256 30.135 198.692 0 128 0Z"/>
-                            <path fill="#FFF" d="M32.305 84.044c-1.724 9.014-8.262 9.014-14.928 9.014H13.63l3.448-17.802h3.78c7.772 0 12.062 0 14.11 3.862c1.434 2.706 1.026 4.926-2.663 4.926zm7.31-14.486c-2.768-4.618-7.93-6.522-14.694-6.522H9.423c-1.26 0-2.34.906-2.58 2.147L.234 100.051c-.21 1.084.541 2.081 1.659 2.081h7.54c1.26 0 2.34-.906 2.58-2.147l1.713-8.842h5.932c10.617 0 18.486-3.129 21.618-14.19C43.205 71.032 42.593 67.104 39.615 69.558z"/>
-                            <path fill="#FFF" d="M74.089 84.044c-1.724 9.014-8.262 9.014-14.928 9.014H55.414l3.448-17.802h3.78c7.772 0 12.062 0 14.11 3.862c1.434 2.706 1.026 4.926-2.663 4.926zm7.31-14.486c-2.768-4.618-7.93-6.522-14.694-6.522H51.207c-1.26 0-2.34.906-2.58 2.147L42.018 100.051c-.21 1.084.541 2.081 1.659 2.081h7.54c1.26 0 2.34-.906 2.58-2.147l1.713-8.842h5.932c10.617 0 18.486-3.129 21.618-14.19C84.989 71.032 84.377 67.104 81.399 69.558z"/>
-                            <path fill="#FFF" d="M134.906 102.132h-7.54c-1.118 0-1.869-.997-1.659-2.081l6.609-34.868c.24-1.241 1.32-2.147 2.58-2.147h7.54c1.118 0 1.869.997 1.659 2.081l-1.378 7.276h5.932c10.617 0 18.486 3.129 21.618 14.19c2.929 10.421 2.317 14.349-.661 11.895c-2.768 4.618-7.93 6.522-14.694 6.522h-14.498c-1.26 0-2.34-.906-2.58-2.147l-1.378-7.276h-5.932c-7.772 0-12.062 0-14.11-3.862c-1.434-2.706-1.026-4.926 2.663-4.926c1.724-9.014 8.262-9.014 14.928-9.014h3.747l-3.448 17.802h-3.78z"/>
+                <div class="nav-section">
+                    <div class="nav-title">Navigation</div>
+                    <div class="nav-item active">
+                        <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
                         </svg>
-                        <h2 style="color: #ff5722; margin-top: 10px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">PHP Web Application</h2>
-                        <div class="status-badge">🟢 Application Running</div>
+                        <span class="nav-text">Dashboard</span>
                     </div>
-                    
-                    <div class="app-info">
-                        <div class="info-card">
-                            <h3>👋 Hello <?= htmlspecialchars($user) ?>!</h3>
-                            <p>Welcome to your PHP web application. This app is running successfully and ready to serve your requests.</p>
+                    <div class="nav-item">
+                        <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                        </svg>
+                        <span class="nav-text">APIs</span>
+                    </div>
+                    <div class="nav-item">
+                        <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span class="nav-text">Health Check</span>
+                    </div>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-title">System</div>
+                    <div class="nav-item">
+                        <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                        </svg>
+                        <span class="nav-text">Metrics</span>
+                    </div>
+                    <div class="nav-item">
+                        <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
+                        </svg>
+                        <span class="nav-text">Settings</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="main-content">
+                <div class="header">
+                    <div class="header-content">
+                        <h1 class="header-title"><?= "${{ values.app_name | title }}" ?></h1>
+                        <p class="header-subtitle">Enterprise PHP Application Dashboard</p>
+                        <div class="status-indicator">
+                            <div class="status-dot"></div>
+                            <span>System Online</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard">
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <svg class="card-icon" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+                                </svg>
+                                <h3 class="card-title">User Information</h3>
+                            </div>
+                            <div class="card-content">
+                                <div class="metric">
+                                    <span class="metric-label">Current User</span>
+                                    <span class="metric-value"><?= htmlspecialchars($user) ?></span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">Session Started</span>
+                                    <span class="metric-value"><?= htmlspecialchars($timeInfo['time']) ?></span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">Today</span>
+                                    <span class="metric-value"><?= htmlspecialchars($timeInfo['day']) ?></span>
+                                </div>
+                            </div>
                         </div>
                         
-                        <div class="info-card">
-                            <h3>⏰ Current Time</h3>
-                            <p><?= htmlspecialchars($timeInfo['timestamp']) ?></p>
-                            <p>Server timezone and current timestamp</p>
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <svg class="card-icon" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                                </svg>
+                                <h3 class="card-title">System Status</h3>
+                            </div>
+                            <div class="card-content">
+                                <div class="metric">
+                                    <span class="metric-label">PHP Version</span>
+                                    <span class="metric-value"><?= phpversion() ?></span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">Server Status</span>
+                                    <span class="metric-value">🟢 Online</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">Last Updated</span>
+                                    <span class="metric-value"><?= htmlspecialchars($timeInfo['date']) ?></span>
+                                </div>
+                            </div>
                         </div>
                         
-                        <div class="info-card">
-                            <h3>🚀 App Status</h3>
-                            <p>Application: <strong><?= "${{ values.app_name | title }}" ?></strong></p>
-                            <p>Status: <span style="color: #28a745;">✅ Healthy</span></p>
-                        </div>
-                    </div>
-                    
-                    <div class="api-endpoints">
-                        <h2>🔗 API Endpoints</h2>
-                        <div class="endpoint-list">
-                            <div class="endpoint">
-                                <div class="endpoint-url">GET /api/details</div>
-                                <div class="endpoint-desc">Get detailed application information including time, date, and user greeting</div>
-                            </div>
-                            
-                            <div class="endpoint">
-                                <div class="endpoint-url">GET /health</div>
-                                <div class="endpoint-desc">Health check endpoint with uptime information</div>
-                            </div>
-                            
-                            <div class="endpoint">
-                                <div class="endpoint-url">GET /api/stats</div>
-                                <div class="endpoint-desc">Get system statistics including PHP version and memory usage</div>
-                            </div>
-                            
-                            <div class="endpoint">
-                                <div class="endpoint-url">GET /api/json</div>
-                                <div class="endpoint-desc">Get all information in JSON format (original API response)</div>
+                        <div class="api-section">
+                            <h2 class="api-title">API Endpoints</h2>
+                            <div class="api-grid">
+                                <div class="api-endpoint">
+                                    <div class="api-method">GET</div>
+                                    <div class="api-path">/api/details</div>
+                                    <div class="api-description">Retrieve detailed application information including user data, timestamps, and system status.</div>
+                                </div>
+                                
+                                <div class="api-endpoint">
+                                    <div class="api-method">GET</div>
+                                    <div class="api-path">/health</div>
+                                    <div class="api-description">Health check endpoint with uptime monitoring and system diagnostics.</div>
+                                </div>
+                                
+                                <div class="api-endpoint">
+                                    <div class="api-method">GET</div>
+                                    <div class="api-path">/api/stats</div>
+                                    <div class="api-description">System statistics including PHP version, memory usage, and performance metrics.</div>
+                                </div>
+                                
+                                <div class="api-endpoint">
+                                    <div class="api-method">GET</div>
+                                    <div class="api-path">/api/json</div>
+                                    <div class="api-description">Complete application data in JSON format for programmatic access.</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="footer">
-                    <p>💻 Built with PHP <?= phpversion() ?> • Apache • Docker 🐳</p>
-                    <p>🌟 Powered by Backstage Software Templates</p>
+                    <p>Enterprise PHP Application • Built with PHP <?= phpversion() ?> • Apache Server • Docker Container</p>
+                    <p>Powered by Backstage Software Templates • Professional Development Environment</p>
                 </div>
             </div>
         </body>

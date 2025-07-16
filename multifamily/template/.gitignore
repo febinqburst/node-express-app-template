@@ -1,0 +1,89 @@
+# Composer dependencies
+/vendor/
+composer.phar
+composer.lock
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+*.log
+/logs/
+
+# Runtime data
+*.pid
+*.seed
+*.pid.lock
+
+# Cache directories
+/cache/
+/tmp/
+
+# Session files
+/sessions/
+
+# Upload directories
+/uploads/
+/files/
+
+# PHPUnit
+/phpunit.xml
+/.phpunit.result.cache
+/coverage/
+
+# PHP CS Fixer
+/.php_cs.cache
+/.php-cs-fixer.cache
+
+# Psalm
+/psalm.xml
+/.psalm/
+
+# PHPStan
+/phpstan.neon
+/.phpstan/
+
+# Deployment tools
+/deploy.php
+/deploy/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+
+# Temporary files
+*.tmp
+*.temp
+
+# Apache/Nginx logs
+error.log
+access.log
+
+# PHP error logs
+php_errors.log
+
+# Configuration files (if they contain sensitive data)
+config.local.php
+database.local.php 

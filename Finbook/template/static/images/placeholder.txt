@@ -1,0 +1,17 @@
+# Image Placeholder Directory
+
+This directory is reserved for storing static images used by the colorful Python application.
+
+## Recommended Images:
+- hero-bg.jpg (1920x1080) - Hero background image
+- profile.jpg (300x300) - User profile image  
+- gallery images (800x600) - Gallery showcase images
+- icons and logos
+
+## Supported Formats:
+- JPEG (.jpg, .jpeg)
+- PNG (.png)
+- WebP (.webp)
+- SVG (.svg)
+
+The application will gracefully handle missing images with CSS gradients and placeholder content. 

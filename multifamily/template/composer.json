@@ -1,5 +1,5 @@
 {
-    "name": "febinmathew707/${{ values.app_name | lower }}",
+    "name": "febinqburst/${{ values.app_name | lower }}",
     "description": "${{ values.app_name | title }} - Beautiful PHP Web Application with Modern UI, API endpoints, Docker deployment and Jenkins CI/CD (Port 8086)",
     "type": "project",
     "version": "1.0.0",

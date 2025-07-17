@@ -4,7 +4,7 @@ pipeline {
     environment {
         APP_NAME = '${{values.app_name}}'
         DOCKER_REGISTRY = 'ghcr.io'
-        GITHUB_OWNER = 'febinmathew707'
+        GITHUB_OWNER = 'febinqburst'
         IMAGE_NAME = "${DOCKER_REGISTRY}/${GITHUB_OWNER}/${APP_NAME}"
     }
     

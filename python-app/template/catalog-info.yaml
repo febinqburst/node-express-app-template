@@ -4,8 +4,9 @@ metadata:
   name: ${{ values.app_name }}
   description: Python Flask API with Docker deployment and Jenkins CI/CD
   annotations:
-    github.com/project-slug: qburst-praven/${{ values.app_name }}
+    github.com/project-slug: febinqburst/${{ values.app_name }}
     backstage.io/techdocs-ref: dir:.
+    jenkins.io/github-folder: febinqburst/${{ values.app_name }}
 spec:
   type: website
   owner: devops

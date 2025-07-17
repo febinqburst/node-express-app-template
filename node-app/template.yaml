@@ -53,7 +53,7 @@ spec:
       action: publish:github
       input:
         description: Node.js Express Demo Application - ${{ parameters.component_id }}
-        repoUrl: github.com?owner=febinmathew707&repo=${{parameters.component_id}}
+        repoUrl: github.com?owner=febinqburst&repo=${{parameters.component_id}}
         protectDefaultBranch: false
         repoVisibility: public
 

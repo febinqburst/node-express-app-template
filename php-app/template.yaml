@@ -57,8 +57,8 @@ spec:
         protectDefaultBranch: false
         repoVisibility: public
 
-    - id: jenkins-job
-      name: Create Jenkins Multibranch Pipeline
+    - id: jenkins-folder
+      name: Create Jenkins Folder
       action: http:backstage:request
       input:
         method: POST
@@ -67,60 +67,58 @@ spec:
           Content-Type: application/xml
         body: |
           <?xml version='1.0' encoding='UTF-8'?>
-          <org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject plugin="workflow-multibranch">
-            <actions/>
-            <description>Multibranch CI/CD Pipeline for ${{ parameters.component_id }}</description>
+          <com.cloudbees.hudson.plugins.folder.Folder plugin="cloudbees-folder">
+            <description>Pipeline folder for ${{ parameters.component_id }}</description>
             <properties/>
-            <folderViews class="jenkins.branch.MultiBranchProjectViewHolder" plugin="branch-api">
-              <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
-            </folderViews>
             <healthMetrics>
-              <com.cloudbees.hudson.plugins.folder.health.WorstChildHealthMetric plugin="cloudbees-folder">
+              <com.cloudbees.hudson.plugins.folder.health.WorstChildHealthMetric>
                 <nonRecursive>false</nonRecursive>
               </com.cloudbees.hudson.plugins.folder.health.WorstChildHealthMetric>
             </healthMetrics>
-            <icon class="jenkins.branch.MetadataActionFolderIcon" plugin="branch-api">
-              <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
-            </icon>
-            <orphanedItemStrategy class="com.cloudbees.hudson.plugins.folder.computed.DefaultOrphanedItemStrategy" plugin="cloudbees-folder">
-              <pruneDeadBranches>true</pruneDeadBranches>
-              <daysToKeep>-1</daysToKeep>
-              <numToKeep>-1</numToKeep>
-            </orphanedItemStrategy>
-            <triggers>
-              <com.cloudbees.hudson.plugins.folder.computed.PeriodicFolderTrigger plugin="cloudbees-folder">
-                <spec>H H * * *</spec>
-                <interval>86400000</interval>
-              </com.cloudbees.hudson.plugins.folder.computed.PeriodicFolderTrigger>
-            </triggers>
-            <disabled>false</disabled>
-            <sources class="jenkins.branch.BranchSource" plugin="branch-api">
-              <source class="jenkins.plugins.git.GitSCMSource" plugin="git">
-                <id>git-source-${{ parameters.component_id }}</id>
-                <remote>${{ steps['publish'].output.remoteUrl }}</remote>
-                <credentialsId></credentialsId>
-                <traits>
-                  <jenkins.plugins.git.traits.BranchDiscoveryTrait>
-                    <strategyId>1</strategyId>
-                  </jenkins.plugins.git.traits.BranchDiscoveryTrait>
-                </traits>
-              </source>
-              <strategy class="jenkins.branch.DefaultBranchPropertyStrategy" plugin="branch-api">
-                <properties class="empty-list"/>
-              </strategy>
-            </sources>
-            <factory class="org.jenkinsci.plugins.workflow.multibranch.WorkflowBranchProjectFactory" plugin="workflow-multibranch">
-              <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
-              <scriptPath>Jenkinsfile</scriptPath>
-            </factory>
-          </org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject>
+          </com.cloudbees.hudson.plugins.folder.Folder>
 
-    - id: trigger-scan
-      name: Trigger Branch Scan
+    - id: jenkins-job
+      name: Create Jenkins Main Pipeline
       action: http:backstage:request
       input:
         method: POST
-        path: /proxy/jenkins/job/${{ parameters.component_id }}-pipeline/indexing/build
+        path: /proxy/jenkins/job/${{ parameters.component_id }}-pipeline/createItem?name=main
+        headers:
+          Content-Type: application/xml
+        body: |
+          <?xml version='1.0' encoding='UTF-8'?>
+          <flow-definition plugin="workflow-job">
+            <description>Main branch CI/CD Pipeline for ${{ parameters.component_id }}</description>
+            <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps">
+              <scm class="hudson.plugins.git.GitSCM" plugin="git">
+                <userRemoteConfigs>
+                  <hudson.plugins.git.UserRemoteConfig>
+                    <url>${{ steps['publish'].output.remoteUrl }}</url>
+                  </hudson.plugins.git.UserRemoteConfig>
+                </userRemoteConfigs>
+                <branches>
+                  <hudson.plugins.git.BranchSpec>
+                    <name>*/main</name>
+                  </hudson.plugins.git.BranchSpec>
+                </branches>
+              </scm>
+              <scriptPath>Jenkinsfile</scriptPath>
+              <lightweight>true</lightweight>
+            </definition>
+            <triggers>
+              <com.cloudbees.jenkins.GitHubPushTrigger plugin="github">
+                <spec></spec>
+              </com.cloudbees.jenkins.GitHubPushTrigger>
+            </triggers>
+            <disabled>false</disabled>
+          </flow-definition>
+
+    - id: trigger-build
+      name: Trigger Main Build
+      action: http:backstage:request
+      input:
+        method: POST
+        path: /proxy/jenkins/job/${{ parameters.component_id }}-pipeline/job/main/build
 
     - id: register
       name: Register

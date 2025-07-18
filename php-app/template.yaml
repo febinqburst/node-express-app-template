@@ -58,7 +58,7 @@ spec:
         repoVisibility: public
 
     - id: jenkins-job
-      name: Create Jenkins Job
+      name: Create Jenkins Multibranch Pipeline
       action: http:backstage:request
       input:
         method: POST
@@ -66,49 +66,61 @@ spec:
         headers:
           Content-Type: application/xml
         body: |
-          <?xml version='1.1' encoding='UTF-8'?>
-          <flow-definition plugin="workflow-job">
-            <description>CI/CD Pipeline for ${{ parameters.component_id }}</description>
-            <keepDependencies>false</keepDependencies>
-            <properties>
-              <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
-                <triggers>
-                  <com.cloudbees.jenkins.GitHubPushTrigger plugin="github">
-                    <spec></spec>
-                  </com.cloudbees.jenkins.GitHubPushTrigger>
-                </triggers>
-              </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
-            </properties>
-            <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps">
-              <scm class="hudson.plugins.git.GitSCM" plugin="git">
-                <configVersion>2</configVersion>
-                <userRemoteConfigs>
-                  <hudson.plugins.git.UserRemoteConfig>
-                    <url>${{ steps['publish'].output.remoteUrl }}</url>
-                  </hudson.plugins.git.UserRemoteConfig>
-                </userRemoteConfigs>
-                <branches>
-                  <hudson.plugins.git.BranchSpec>
-                    <name>*/main</name>
-                  </hudson.plugins.git.BranchSpec>
-                </branches>
-                <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-                <submoduleCfg class="empty-list"/>
-                <extensions/>
-              </scm>
-              <scriptPath>Jenkinsfile</scriptPath>
-              <lightweight>true</lightweight>
-            </definition>
-            <triggers/>
+          <?xml version='1.0' encoding='UTF-8'?>
+          <org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject plugin="workflow-multibranch">
+            <actions/>
+            <description>Multibranch CI/CD Pipeline for ${{ parameters.component_id }}</description>
+            <properties/>
+            <folderViews class="jenkins.branch.MultiBranchProjectViewHolder" plugin="branch-api">
+              <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+            </folderViews>
+            <healthMetrics>
+              <com.cloudbees.hudson.plugins.folder.health.WorstChildHealthMetric plugin="cloudbees-folder">
+                <nonRecursive>false</nonRecursive>
+              </com.cloudbees.hudson.plugins.folder.health.WorstChildHealthMetric>
+            </healthMetrics>
+            <icon class="jenkins.branch.MetadataActionFolderIcon" plugin="branch-api">
+              <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+            </icon>
+            <orphanedItemStrategy class="com.cloudbees.hudson.plugins.folder.computed.DefaultOrphanedItemStrategy" plugin="cloudbees-folder">
+              <pruneDeadBranches>true</pruneDeadBranches>
+              <daysToKeep>-1</daysToKeep>
+              <numToKeep>-1</numToKeep>
+            </orphanedItemStrategy>
+            <triggers>
+              <com.cloudbees.hudson.plugins.folder.computed.PeriodicFolderTrigger plugin="cloudbees-folder">
+                <spec>H H * * *</spec>
+                <interval>86400000</interval>
+              </com.cloudbees.hudson.plugins.folder.computed.PeriodicFolderTrigger>
+            </triggers>
             <disabled>false</disabled>
-          </flow-definition>
+            <sources class="jenkins.branch.BranchSource" plugin="branch-api">
+              <source class="jenkins.plugins.git.GitSCMSource" plugin="git">
+                <id>git-source-${{ parameters.component_id }}</id>
+                <remote>${{ steps['publish'].output.remoteUrl }}</remote>
+                <credentialsId></credentialsId>
+                <traits>
+                  <jenkins.plugins.git.traits.BranchDiscoveryTrait>
+                    <strategyId>1</strategyId>
+                  </jenkins.plugins.git.traits.BranchDiscoveryTrait>
+                </traits>
+              </source>
+              <strategy class="jenkins.branch.DefaultBranchPropertyStrategy" plugin="branch-api">
+                <properties class="empty-list"/>
+              </strategy>
+            </sources>
+            <factory class="org.jenkinsci.plugins.workflow.multibranch.WorkflowBranchProjectFactory" plugin="workflow-multibranch">
+              <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+              <scriptPath>Jenkinsfile</scriptPath>
+            </factory>
+          </org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject>
 
-    - id: trigger-build
-      name: Trigger First Build
+    - id: trigger-scan
+      name: Trigger Branch Scan
       action: http:backstage:request
       input:
         method: POST
-        path: /proxy/jenkins/job/${{ parameters.component_id }}-pipeline/build
+        path: /proxy/jenkins/job/${{ parameters.component_id }}-pipeline/indexing/build
 
     - id: register
       name: Register
@@ -122,6 +134,6 @@ spec:
       - title: Repository
         url: ${{ steps['publish'].output.remoteUrl }}
       - title: Jenkins Job
-        url: ${{ parameters.jenkins_server }}/job/${{ parameters.component_id }}-pipeline
+        url: ${{ parameters.jenkins_server }}/job/${{ parameters.component_id }}-pipeline/job/main
       - title: API Documentation
         url: ${{ steps['publish'].output.remoteUrl }}/blob/main/README.md 

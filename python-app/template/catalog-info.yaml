@@ -6,7 +6,8 @@ metadata:
   annotations:
     github.com/project-slug: febinqburst/${{ values.app_name }}
     backstage.io/techdocs-ref: dir:.
-    jenkins.io/github-folder: febinqburst/${{ values.app_name }}
+    jenkins.io/job-full-name: ${{ values.app_name }}-pipeline
+    grafana/dashboard-url: https://grafana-qortexone.qburst.build/
 spec:
   type: website
   owner: devops

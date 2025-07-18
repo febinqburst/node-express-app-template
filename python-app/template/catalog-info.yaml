@@ -7,7 +7,6 @@ metadata:
     github.com/project-slug: febinqburst/${{ values.app_name }}
     backstage.io/techdocs-ref: dir:.
     jenkins.io/job-full-name: ${{ values.app_name }}-pipeline
-    grafana/dashboard-selector: "app=${{ values.app_name }}"
     grafana/overview-dashboard: "https://grafana-qortexone.qburst.build/d/90c0ea6b-ee8f-488a-9833-2cffb08b4643/qortexone"
 spec:
   type: service

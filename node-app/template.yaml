@@ -41,7 +41,7 @@ spec:
           type: string
           description: Your Jenkins server URL (e.g., http://jenkins.local:8080)
           pattern: '^https?://.*'
-          default: 'https://jenkins.febinmathew.click'
+          default: 'https://jenkins-qortexone.qburst.build/'
 
   steps:
     - id: fetch-base

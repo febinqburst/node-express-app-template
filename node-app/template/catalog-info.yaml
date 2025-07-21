@@ -9,6 +9,7 @@ metadata:
     jenkins.io/job-full-name: ${{ values.app_name }}-pipeline
     grafana/dashboard-selector: "(tags @> 'qortexone-docker')"
     grafana/overview-dashboard: "https://grafana-qortexone.qburst.build/d/ca8db6e6-dcaa-4b48-8c2c-f11fefd7ca23/qortexone-docker?orgId=1&var-container_name=${{ values.app_name }}"
+spec:
   type: service
   lifecycle: experimental
   owner: ${{values.owner}}

@@ -11,5 +11,6 @@ metadata:
     grafana/overview-dashboard: "https://grafana-qortexone.qburst.build/d/90c0ea6b-ee8f-488a-9833-2cffb08b4643/qortexone"
 spec:
   type: service
-  owner: devops
-  lifecycle: experimental 
+  lifecycle: experimental
+  owner: ${{values.owner}}
+  system: default-system

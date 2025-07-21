@@ -9,5 +9,5 @@ metadata:
     jenkins.io/github-folder: febinqburst/${{ values.app_name }}
 spec:
   type: website
-  owner: devops
+  owner: ${{values.owner}}
   lifecycle: experimental
